@@ -36,11 +36,16 @@ setup(
     author_email="cariad@cariad.earth",
     classifiers=classifiers,
     description="Lightweight documentation generator",
+    entry_points={
+        "console_scripts": [
+            "edition=edition.__main__:cli_entry",
+        ],
+    },
     include_package_data=True,
     license="MIT",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    name="smokestack",
+    name="edition",
     packages=[
         "edition",
     ],
