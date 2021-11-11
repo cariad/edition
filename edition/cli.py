@@ -1,13 +1,16 @@
 from argparse import ArgumentParser
 from enum import IntEnum, auto, unique
+from pathlib import Path
 from typing import IO, List
 
 from edition import __version__
+from edition.edition import Edition
 
 
 @unique
 class CliTask(IntEnum):
     HELP = auto()
+    MAKE = auto()
     VERSION = auto()
 
 
@@ -17,6 +20,8 @@ class Cli:
             description="Lightweight documentation generator",
             epilog="Made with love by Cariad Eccleston: https://github.com/cariad/edition",
         )
+
+        self._parser.add_argument("source", help="source document", nargs="?")
 
         self._parser.add_argument(
             "--version",
@@ -29,6 +34,10 @@ class Cli:
 
         if parsed.version:
             self._task = CliTask.VERSION
+        elif parsed.source:
+            self._task = CliTask.MAKE
+
+        self._src = Path(parsed.source).resolve().absolute() if parsed.source else None
 
     @property
     def task(self) -> CliTask:
@@ -46,6 +55,12 @@ class Cli:
         if self._task == CliTask.VERSION:
             writer.write(__version__)
             writer.write("\n")
+            return 0
+
+        if self._src:
+            with open(self._src, "r") as f:
+                edition = Edition(f.read())
+            edition.press(writer=writer)
             return 0
 
         writer.write(self._parser.format_help())

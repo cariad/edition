@@ -1,1 +1,2 @@
+include edition/document.html
 include edition/VERSION

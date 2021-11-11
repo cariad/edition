@@ -42,6 +42,10 @@ setup(
         ],
     },
     include_package_data=True,
+    install_requires=[
+        "markdown           >=3.3.4, <4.0",
+        "python-frontmatter >=1.0,   <2.0",
+    ],
     license="MIT",
     long_description=long_description,
     long_description_content_type="text/markdown",
