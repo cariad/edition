@@ -5,7 +5,7 @@ from edition.cli import Cli, CliTask
 
 def test_invoke__make() -> None:
     writer = StringIO()
-    assert Cli(["docs/src.md"]).invoke(writer) == 0
+    assert Cli(["docs/src.md", "--press", "html"]).invoke(writer) == 0
     assert writer.getvalue().startswith("<!doctype html>")
 
 
@@ -22,7 +22,7 @@ def test_invoke__version() -> None:
 
 
 def test_parse__make() -> None:
-    assert Cli(["docs/src.md"]).task == CliTask.MAKE
+    assert Cli(["docs/src.md", "--press", "html"]).task == CliTask.MAKE
 
 
 def test_parse__none() -> None:
