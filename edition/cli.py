@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import IO, List
 
 from edition import __version__
-from edition.edition import Edition
+from edition.presses import keys, make_from_file
 
 
 @unique
@@ -24,6 +24,12 @@ class Cli:
         self._parser.add_argument("source", help="source document", nargs="?")
 
         self._parser.add_argument(
+            "--press",
+            help="output format",
+            metavar=f"{{{','.join(keys())}}}",
+        )
+
+        self._parser.add_argument(
             "--version",
             help="show version and exit",
             action="store_true",
@@ -34,16 +40,14 @@ class Cli:
 
         if parsed.version:
             self._task = CliTask.VERSION
-        elif parsed.source:
+        elif parsed.press and parsed.source:
             self._task = CliTask.MAKE
 
-        self._src = Path(parsed.source).resolve().absolute() if parsed.source else None
-
-    @property
-    def task(self) -> CliTask:
-        """Gets the task that this CLI invocation will perform."""
-
-        return self._task
+        self._press = (
+            make_from_file(key=parsed.press, path=Path(parsed.source))
+            if parsed.press and parsed.source
+            else None
+        )
 
     def invoke(self, writer: IO[str]) -> int:
         """
@@ -57,11 +61,15 @@ class Cli:
             writer.write("\n")
             return 0
 
-        if self._src:
-            with open(self._src, "r") as f:
-                edition = Edition(f.read())
-            edition.press(writer=writer)
+        if self._press:
+            self._press.press(writer=writer)
             return 0
 
         writer.write(self._parser.format_help())
         return 1
+
+    @property
+    def task(self) -> CliTask:
+        """Gets the task that this CLI invocation will perform."""
+
+        return self._task
