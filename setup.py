@@ -52,9 +52,13 @@ setup(
     name="edition",
     packages=[
         "edition",
+        "edition.exceptions",
+        "edition.presses",
     ],
     package_data={
         "edition": ["py.typed"],
+        "edition.exceptions": ["py.typed"],
+        "edition.presses": ["py.typed"],
     },
     python_requires=">=3.8",
     url="https://github.com/cariad/edition",
