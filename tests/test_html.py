@@ -20,8 +20,7 @@ def test_get_css() -> None:
     with get_css() as f:
         actual = f.read()
     assert actual.startswith("body {")
-    assert actual.endswith("margin-bottom: 1rem;\n}\n")
-
+    assert actual.endswith("margin-top: calc(var(--paragraph-spacing) * 2);\n}\n")
 
 def test_get_html_template() -> None:
     with get_html_template() as f:

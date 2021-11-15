@@ -23,20 +23,16 @@ body {
   font-size: 1.2rem;
 }
 
-
-/* REGULAR WIDTH */
-/* header.list, */
-article > h1,
-article > h2,
-article > h3,
-article > h4,
-article > h5,
-article > h6,
-article > p,
-article > footer,
-article > blockquote,
-article > .footnotes,
-ol, ul {
+blockquote,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+p,
+ul {
   margin-left: auto;
   margin-right: auto;
   max-width: var(--regular-margin)
@@ -73,13 +69,16 @@ a {
   text-decoration: none;
 }
 
-ol, ul {
+ol,
+ul {
+  margin-top: var(--paragraph-spacing-smaller);
+  margin-bottom: 0;
+
   max-width: calc(var(--regular-margin) - 2rem);
 }
 
-
 li {
-  margin-bottom: 1rem;
+  margin-bottom: var(--paragraph-spacing-smaller);
 }
 
 h1 {
@@ -145,21 +144,13 @@ p > code {
   font-weight: 500;
 }
 
-
 sup {
   /* font-size: 0.9rem; */
   padding-left: 0.2rem;
   padding-right: 0.2rem;
 }
 
-
-
-
-
-
-ol,
-p,
-ul {
+p {
   margin-bottom: 0;
   margin-top: var(--paragraph-spacing);
 }
@@ -218,13 +209,4 @@ h3+h4 {
 h2, h3, h4, h5, h6 {
   margin-bottom: var(--paragraph-spacing);
   margin-top: calc(var(--paragraph-spacing) * 2);
-}
-
-
-article > .footnotes > hr {
-  display: none;
-}
-
-article > .footnotes p {
-  margin-bottom: 1rem;
 }
