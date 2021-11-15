@@ -11,9 +11,6 @@ fi
 
 echo "${version}" > edition/VERSION
 
-python -m edition docs/src README.md       --press markdown
-python -m edition docs/src docs/index.html --press html
-
 rm -rf dist
 python setup.py bdist_wheel
 rm -rf build
