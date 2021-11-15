@@ -11,4 +11,4 @@ assert() {
   exit 1
 }
 
-assert "$(edition --version)" "${CIRCLE_TAG:-"-1.-1.-1"}"
+assert "$(edition --version || true)" "${CIRCLE_TAG:-"-1.-1.-1"}"
