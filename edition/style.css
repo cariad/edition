@@ -1,0 +1,258 @@
+body {
+  /* Thanks! https://systemfontstack.com */
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+}
+
+body {
+  --paragraph-spacing: 2rem;
+
+  background-color: var(--white);
+  color: var(--black);
+
+  margin-top: 2rem;
+
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+/* WIDTHS */
+
+article > .highlight,
+article > .thtml,
+.regular-width {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 50rem;
+}
+
+
+/* REGULAR WIDTH */
+/* header.list, */
+article > h1,
+article > h2,
+article > h3,
+article > h4,
+article > h5,
+article > h6,
+article > p,
+article > footer,
+article > blockquote,
+article > .footnotes,
+/* article > .highlight,
+article > .thtml, */
+.regular-width {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 43rem;
+}
+
+/* NARROW */
+ol,
+ul {
+  /* margin-top: calc(0rem - var(--paragraph-spacing) + 1rem) !important; */
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 42rem;
+}
+
+li {
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+nav li {
+  list-style: none;
+  font-weight: bold;
+}
+
+p {
+  line-height: 1.6;
+}
+
+.thtml {
+  overflow-x: auto;
+}
+
+blockquote {
+  font-style: italic;
+  border-left: 0.6rem solid var(--red);
+  padding-left: 1rem;
+}
+
+
+
+
+h2 > code,
+li > code,
+p > code {
+  /* font-family: "Wotfard", sans-serif; */
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 0.12rem;
+  text-decoration-color: var(--yellow);
+}
+
+li > code,
+p > code {
+  font-weight: 500;
+}
+
+
+sup {
+  /* font-size: 0.9rem; */
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+}
+
+
+
+a {
+  color: var(--black);
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 0.12rem;
+  text-decoration-color: var(--blue);
+}
+
+/* ARTICLE HEADERS */
+
+
+body > article ol,
+body > article p,
+body > article ul {
+  margin-top: 0;
+  margin-bottom: var(--paragraph-spacing);
+}
+
+nav.articles {
+  column-gap: 1em;
+  display: grid;
+  line-height: 1.3;
+  margin-top: 8rem;
+  margin-bottom: 8rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: max-content;
+  row-gap: 1.2em;
+}
+
+nav.articles a.date {
+  grid-column-start: 1;
+  padding-top: 0.2em;
+}
+
+nav.articles a.title {
+  grid-column-start: 2;
+  text-decoration: none;
+  font-weight: 500;
+  /* font-size: 0.9em; */
+}
+
+footer.pagination {
+  text-align: center;
+}
+
+code, pre {
+  font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+}
+
+.highlight, .thtml {
+  /* --padding: 1rem; */
+
+  background-color: #161925;
+  color: #fff;
+
+  padding: 1rem;
+  border-radius: 0.3em;
+
+  margin-bottom: var(--paragraph-spacing);
+  max-width: max-content;
+}
+
+/* .highlight .language-bash     .p,
+.highlight .language-markdown .kn,
+.highlight .language-markdown .n,
+.highlight .language-markdown .nn,
+.highlight .language-markdown .p,
+.highlight .language-markdown .s,
+.highlight .language-markdown .s2,
+.highlight .language-python   .kn {
+  color: #ED3185;
+  font-weight: 600;
+}
+
+.highlight .n,
+.highlight .language-bash,
+.highlight .language-markdown {
+  color: #EBC55C;
+}
+
+.highlight .language-bash .c1,
+.highlight .language-markdown .c {
+  color: #54C981;
+}
+
+.highlight .mf,
+.highlight .mi,
+.highlight .language-python .s2 {
+  font-weight: 500;
+  color: #54C981;
+}
+
+.highlight .n {
+  font-weight: 500;
+}
+*/
+.highlight > pre {
+  overflow-x: auto;
+  margin: 0;
+  padding: 0;
+}
+
+body > footer {
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+}
+
+nav > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav > ul > li {
+  display: inline;
+  margin-right: 1rem;
+}
+
+nav > ul > li:last-child {
+  margin-right: 0;
+}
+
+h2, h3, h4, h5, h6 {
+  /* text-align: center; */
+  margin-bottom: var(--paragraph-spacing);
+  margin-top: calc(var(--paragraph-spacing) * 2);
+}
+
+
+/* article > .footnotes {
+  font-size: 0.9rem;
+} */
+
+article > .footnotes > hr {
+  display: none;
+}
+
+article > .footnotes p {
+  margin-bottom: 1rem;
+}

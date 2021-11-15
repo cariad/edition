@@ -1,9 +1,9 @@
 from io import StringIO
 
-from edition.html_renderer import HtmlRenderer
+from edition.html_renderer import EditionHtmlRenderer
 
 
 def test() -> None:
     writer = StringIO()
-    HtmlRenderer().render(writer)
+    EditionHtmlRenderer().render(writer)
     assert writer.getvalue().startswith("<!doctype html>")

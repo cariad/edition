@@ -1,2 +1,3 @@
 include edition/document.html
+include edition/style.css
 include edition/VERSION

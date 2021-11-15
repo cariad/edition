@@ -22,6 +22,11 @@ class Cli:
         )
 
         self._parser.add_argument("source", help="source document", nargs="?")
+        self._parser.add_argument(
+            "output",
+            help="output document (will emit to stdout if omitted)",
+            nargs="?",
+        )
 
         self._parser.add_argument(
             "--press",
@@ -40,9 +45,10 @@ class Cli:
 
         if parsed.version:
             self._task = CliTask.VERSION
-        elif parsed.press and parsed.source:
+        elif parsed.source and parsed.press:
             self._task = CliTask.MAKE
 
+        self._output = parsed.output
         self._press = (
             make_from_file(key=parsed.press, path=Path(parsed.source))
             if parsed.press and parsed.source
@@ -62,7 +68,10 @@ class Cli:
             return 0
 
         if self._press:
-            self._press.press(writer=writer)
+            render = open(self._output, "w") if self._output else writer
+            self._press.press(writer=render)
+            if self._output:
+                render.close()
             return 0
 
         writer.write(self._parser.format_help())

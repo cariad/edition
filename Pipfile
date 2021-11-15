@@ -16,8 +16,10 @@ types-markdown = "~=3.3"
 yamllint = "*"
 
 [packages]
+dinject = "~=1.2"
 markdown = "~=3.3"
 python-frontmatter = "~=1.0.0"
+pygments = "~=2.10"
 
 [requires]
 python_version = "3.10"

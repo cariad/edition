@@ -43,8 +43,10 @@ setup(
     },
     include_package_data=True,
     install_requires=[
-        "markdown           >=3.3.4, <4.0",
-        "python-frontmatter >=1.0,   <2.0",
+        "dinject~=1.2",
+        "markdown~=3.3.4",
+        "pygments~=2.10",
+        "python-frontmatter~=1.0",
     ],
     license="MIT",
     long_description=long_description,
