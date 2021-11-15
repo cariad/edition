@@ -1,0 +1,382 @@
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Edition</title>
+    <meta name="author" content="Cariad Eccleston" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📰</text></svg>" />
+    <style>body {
+  /* Thanks! https://systemfontstack.com */
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+}
+
+body {
+  --paragraph-spacing: 2rem;
+  --paragraph-spacing-smaller: 0.6rem;
+
+  --regular-margin: 43rem;
+  --grey: #ccc;
+
+  --code-padding: 2rem;
+
+  background-color: var(--white);
+  color: var(--black);
+
+  margin-top: 2rem;
+  margin-bottom: 8rem;
+
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  font-size: 1.2rem;
+}
+
+
+/* REGULAR WIDTH */
+/* header.list, */
+article > h1,
+article > h2,
+article > h3,
+article > h4,
+article > h5,
+article > h6,
+article > p,
+article > footer,
+article > blockquote,
+article > .footnotes,
+ol, ul {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--regular-margin)
+}
+
+article > .highlight,
+article > .thtml {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: calc(var(--regular-margin) - (var(--code-padding)*2));
+}
+
+table {
+  margin-top: var(--paragraph-spacing);
+  margin-left: auto;
+  margin-right: auto;
+  width: var(--regular-margin);
+  max-width: var(--regular-margin);
+}
+
+table td,
+table th {
+  padding-left: 0;
+  padding-right: 1rem;
+  padding-top: 0.4rem;
+}
+
+table td:last-child,
+table th:last-child {
+  padding-right: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+ol, ul {
+  max-width: calc(var(--regular-margin) - 2rem);
+}
+
+
+li {
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h1, h2, h3, h4, h5, h6, th {
+  border-bottom: 1px solid var(--grey);
+  padding-bottom: 0.3rem;
+}
+
+nav.toc {
+  font-size: 0.8em;
+  letter-spacing: 0.02rem;
+}
+
+nav.toc ol {
+  padding-left: 1rem;
+}
+
+nav.toc li ol {
+  margin-top: 0.5rem;
+}
+
+nav.toc li {
+  list-style: none;
+  margin-bottom: 0.5rem;
+}
+
+p, li {
+  line-height: 1.6;
+}
+
+.thtml {
+  overflow-x: auto;
+}
+
+blockquote {
+  font-style: italic;
+  border-left: 0.6rem solid var(--red);
+  padding-left: 1rem;
+}
+
+
+
+
+h2 > code,
+li > code,
+p > code {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 0.12rem;
+  text-decoration-color: var(--yellow);
+}
+
+li > code,
+p > code {
+  font-weight: 500;
+}
+
+
+sup {
+  /* font-size: 0.9rem; */
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+}
+
+
+
+
+
+
+ol,
+p,
+ul {
+  margin-bottom: 0;
+  margin-top: var(--paragraph-spacing);
+}
+
+code, pre {
+  font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+}
+
+.highlight, .thtml {
+  font-size: 0.9em;
+
+  background-color: #1B2A41;
+  color: #fff;
+
+  padding: var(--code-padding);
+  border-radius: 0.3em;
+
+  margin-top: var(--paragraph-spacing-smaller);
+  margin-bottom: var(--paragraph-spacing);
+
+  box-shadow: 0 0 0.6rem var(--grey)
+}
+
+
+.highlight > pre {
+  overflow-x: auto;
+  margin: 0;
+  padding: 0;
+}
+
+body > footer {
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+}
+
+nav > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav > ul > li {
+  display: inline;
+  margin-right: 1rem;
+}
+
+
+h2+h3 {
+  margin-top: 0;
+}
+
+h3+h4 {
+  margin-top: 0;
+}
+
+h2, h3, h4, h5, h6 {
+  margin-bottom: var(--paragraph-spacing);
+  margin-top: calc(var(--paragraph-spacing) * 2);
+}
+
+
+article > .footnotes > hr {
+  display: none;
+}
+
+article > .footnotes p {
+  margin-bottom: 1rem;
+}
+</style>
+  </head>
+
+  <body>
+    <article>
+        <h1>📰 Edition</h1>
+<p><strong>WARNING: This is a pre-release project.</strong></p>
+<p><strong>Edition</strong> is a command-line application for creating beautiful HTML and Markdown editions of your projects' documentation.</p>
+<p>In fact, the document you're reading right now was pressed by Edition.</p>
+<p><nav class="toc"><ol><li><a href="#-highlights">✨ Highlights</a></li><li><a href="#-example">✋ Example</a></li><li><a href="#-is-edition-right-for-you">🤔 Is Edition right for you?</a></li><li><a href="#-getting-started">⚙️ Getting Started</a></li><li><a href="#-creating-your-source-document">📄 Creating your source document</a><ol><li><a href="#front-matter">Front matter</a></li><li><a href="#markup">Markup</a></li></ol></li><li><a href="#-contributing">🍰 Contributing</a></li><li><a href="#-licence">👮‍♀️ Licence</a></li><li><a href="#-the-author">👩‍💻 The Author</a></li><li><a href="#-related-projects">🔗 Related Projects</a></li></ol></nav></p>
+<h2>✨ Highlights<a id="-highlights"></a></h2>
+<ul>
+<li><strong>Write your documentation once.</strong><br />Edition will give you an <code>README.md</code> to upload to your project, PyPI and all the rest, <em>and</em> a beautiful HTML page ready to upload directly to GitHub or GitLab Pages.</li>
+<li><strong>Works out of the box.</strong><br />With one command, your existing <code>README.md</code> can be converted to beautiful HTML.</li>
+<li><strong>Embed your code samples.</strong><br />Edition will execute your code and embed the results.</li>
+</ul>
+<h2>✋ Example<a id="-example"></a></h2>
+<p>Create this Markdown document named <code>example-source.md</code>:</p>
+<div class="highlight"><pre><span></span><span class="gh"># Edition example</span>
+
+Save this file to your local machine as <span class="sb">`example-source.md`</span>
+then run:
+
+<span class="sb">```bash</span>
+edition example-source.md example.html --press html
+<span class="sb">```</span>
+
+Now open <span class="sb">`example.html`</span> in a web browser. The code example
+below will be complete.
+
+<span class="sb">```bash</span>
+python --version
+<span class="sb">```</span>
+
+&lt;!--edition-exec--&gt;
+</pre></div>
+
+<p>Run:</p>
+<div class="highlight"><pre><span></span>python -m edition docs/example-source.md docs/example.html --press html
+</pre></div>
+
+
+
+<pre class="nohighlight thtml"><code class="thtml-code">warn: no value for author<br />warn: no value for favicon-emoji<br /></code></pre>
+
+
+
+<p>This will generate <a href="example.html">example.html</a>. Open that file in a web browser.</p>
+<h2>🤔 Is Edition right for you?<a id="-is-edition-right-for-you"></a></h2>
+<p>Edition could be great for you if:</p>
+<ul>
+<li>You've tried other documentation tools and they were more complex or time-consuming than you care for</li>
+<li>Your documentation fits on a single page</li>
+</ul>
+<p>Edition is not a feature-matching substitute for Sphinx, mkdocs, pdoc or the like, nor is Edition aiming to be.</p>
+<p>If you need multi-page documentation, docstring parsing or fine configuration then Edition is not right for you.</p>
+<h2>⚙️ Getting Started<a id="-getting-started"></a></h2>
+<p>Edition requires <strong>Python 3.8</strong> or later.</p>
+<p>Install Edition via <code>pip</code>:</p>
+<div class="highlight"><pre><span></span>pip install edition
+</pre></div>
+
+<h2>📄 Creating your source document<a id="-creating-your-source-document"></a></h2>
+<p>Your <strong>source document</strong> is the Markdown document from which all your editions will be pressed.</p>
+<p>Any Markdown document you already have -- like your project's <code>README.md</code> -- is already a valid source document, but we can add some front matter and additional markup to help guide the presses.</p>
+<h3>Front matter<a id="front-matter"></a></h3>
+<p>The following front matter properties come into play only when pressing HTML.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Property</th>
+<th align="left">Description</th>
+<th align="left">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">author</td>
+<td align="left">Author name</td>
+<td align="left">No author</td>
+</tr>
+<tr>
+<td align="left">favicon-emoji</td>
+<td align="left">Emoji to use as favicon</td>
+<td align="left">No favicon</td>
+</tr>
+<tr>
+<td align="left">title</td>
+<td align="left">Page title</td>
+<td align="left">Top-level heading</td>
+</tr>
+</tbody>
+</table>
+<p>For example:</p>
+<div class="highlight"><pre><span></span>---
+author: Cariad Eccleston
+favicon-emoji: 🍕
+<span class="gh"># If "title" was omitted then the top-level "Example"</span>
+<span class="gh"># heading would be used instead:</span>
+title: Embedded Example
+
+---
+<span class="gh"># Example</span>
+</pre></div>
+
+<h3>Markup<a id="markup"></a></h3>
+<h4>Code execution<a id="code-execution"></a></h4>
+<p>To have Edition execute your code then embed the result:</p>
+<ol>
+<li>Create a regular Markdown code block</li>
+<li>Add <code>&lt;!--edition-exec--&gt;</code> after the block</li>
+</ol>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><span class="sb">```python</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Hello, world!"</span><span class="p">)</span>
+<span class="sb">```</span>
+
+&lt;!--edition-exec--&gt;
+</pre></div>
+
+<p>Currently only <code>bash</code> and <code>python</code> code blocks are supported. More languages can be added if they are <a href="#contributing">requested</a>.</p>
+<h4>Table of Contents<a id="table-of-contents"></a></h4>
+<div class="highlight"><pre><span></span><span class="p"><</span><span class="nt">edition</span> <span class="na">value</span><span class="o">=</span><span class="s">"toc"</span> <span class="p">/></span>
+</pre></div>
+
+<h2>🍰 Contributing<a id="-contributing"></a></h2>
+<p>Thank you for considering contribution!</p>
+<p>To contribute a bug report, enhancement or feature request, please raise an issue at <a href="https://github.com/cariad/edition/issues">github.com/cariad/edition/issues</a>.</p>
+<p>If you want to contribute a code change, please raise an issue first so we can chat about the direction you want to take.</p>
+<h2>👮‍♀️ Licence<a id="-licence"></a></h2>
+<p>Edition is released at <a href="https://github.com/cariad/edition">github.com/cariad/edition</a> under the MIT Licence.</p>
+<p>See <a href="https://github.com/cariad/edition/blob/main/LICENSE">LICENSE</a> for more information.</p>
+<h2>👩‍💻 The Author<a id="-the-author"></a></h2>
+<p>Hello! 👋 I'm <strong>Cariad Eccleston</strong> and I'm a freelance DevOps and backend engineer. My contact details are available on my personal wiki at <a href="https://cariad.earth">cariad.earth</a>.</p>
+<p>Please consider supporting my open source projects by <a href="https://github.com/sponsors/cariad/">sponsoring me on GitHub</a>.</p>
+<h2>🔗 Related Projects<a id="-related-projects"></a></h2>
+<ul>
+<li>Epic thanks to John Gruber for releasing the <a href="https://daringfireball.net/projects/markdown/">Markdown specification</a>.</li>
+</ul>
+    </article>
+  </body>
+
+</html>

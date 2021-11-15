@@ -1,3 +1,9 @@
+---
+author: Cariad Eccleston
+favicon-emoji: 📰
+title: Edition
+---
+
 # 📰 Edition
 
 **WARNING: This is a pre-release project.**
@@ -44,14 +50,7 @@ Run:
 python -m edition docs/example-source.md docs/example.html --press html
 ```
 
-<!--edition-exec as=markdown fence=backticks host=shell range=start-->
-
-```text
-warn: no value for author
-warn: no value for favicon-emoji
-```
-
-<!--edition-exec range=end-->
+<!--edition-exec-->
 
 This will generate [example.html](example.html). Open that file in a web browser.
 
