@@ -12,12 +12,11 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - pipenv-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-            - pipenv-{{ .Branch }}-
+            - pipenv-{{ checksum "Pipfile.lock" }}
             - pipenv-
       - run: pipenv sync --dev
       - save_cache:
-          key: pipenv-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          key: pipenv-{{ checksum "Pipfile.lock" }}
           paths:
             - .venv
 
@@ -30,8 +29,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - pipenv-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-      - run: pipenv run ./lint-black.sh
+            - pipenv-{{ checksum "Pipfile.lock" }}
+      - run: pipenv run ./scripts/lint-black.sh
 
   lint_flake8:
     docker:
@@ -42,8 +41,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - pipenv-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-      - run: pipenv run ./lint-flake8.sh
+            - pipenv-{{ checksum "Pipfile.lock" }}
+      - run: pipenv run ./scripts/lint-flake8.sh
 
   lint_isort:
     docker:
@@ -54,8 +53,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - pipenv-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-      - run: pipenv run ./lint-isort.sh
+            - pipenv-{{ checksum "Pipfile.lock" }}
+      - run: pipenv run ./scripts/lint-isort.sh
 
   lint_package_types:
     docker:
@@ -66,12 +65,12 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - pipenv-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+            - pipenv-{{ checksum "Pipfile.lock" }}
       - restore_cache:
           keys:
             - mypy-package-{{ .Branch }}
             - mypy-package-main
-      - run: pipenv run ./lint-package-types.sh
+      - run: pipenv run ./scripts/lint-package-types.sh
       - save_cache:
           key: mypy-package-{{ .Branch }}
           paths:
@@ -86,8 +85,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - pipenv-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-      - run: pipenv run ./lint-shell.sh
+            - pipenv-{{ checksum "Pipfile.lock" }}
+      - run: pipenv run ./scripts/lint-shell.sh
 
   lint_test_types:
     docker:
@@ -98,12 +97,12 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - pipenv-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+            - pipenv-{{ checksum "Pipfile.lock" }}
       - restore_cache:
           keys:
             - mypy-test-{{ .Branch }}
             - mypy-test-main
-      - run: pipenv run ./lint-test-types.sh
+      - run: pipenv run ./scripts/lint-test-types.sh
       - save_cache:
           key: mypy-test-{{ .Branch }}
           paths:
@@ -118,8 +117,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - pipenv-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-      - run: pipenv run ./lint-yaml.sh
+            - pipenv-{{ checksum "Pipfile.lock" }}
+      - run: pipenv run ./scripts/lint-yaml.sh
 
   test:
     docker:
@@ -130,7 +129,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - pipenv-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+            - pipenv-{{ checksum "Pipfile.lock" }}
       - run: pipenv run ./test.sh
       - codecov/upload:
           file: coverage.xml
@@ -144,9 +143,10 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - pipenv-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+            - pipenv-{{ checksum "Pipfile.lock" }}
       - run: pipenv run ./build.sh
       - run: pip install dist/*
+      - run: pipenv run ./scripts/test-cli.sh
       - run: if [[ -z "${CIRCLE_TAG}" ]]; then circleci-agent step halt; fi
       - run: pipenv run twine upload dist/*
 
