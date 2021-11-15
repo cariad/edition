@@ -1,8 +1,8 @@
 from html.parser import HTMLParser
-from importlib.resources import open_text
 from sys import stdout
 from typing import IO, Dict, List, Optional, Tuple
 
+from edition.html import get_css
 from edition.metadata import Metadata
 
 TAttribute = Tuple[str, Optional[str]]
@@ -16,7 +16,13 @@ class EditionHtmlRenderer(HTMLParser):
         self._last_data: str = ""
 
     def handle_comment(self, data: str) -> None:
-        print(data)
+        """
+        Handles HTML comments encountered in the feed.
+        """
+
+        # We intentionally pass comments through since they could be present
+        # inside Markdown code blocks. We only escape the brackets to ensure the
+        # comments make it through subsequent HTML processing.
         self._writer.write("&lt;!--")
         self._writer.write(data)
         self._writer.write("--&gt;")
@@ -102,11 +108,14 @@ class EditionHtmlRenderer(HTMLParser):
     def _set_default_metadata(self) -> None:
         if not self._metadata:
             return None
-        with open_text(__package__, "style.css") as f:
+        with get_css() as f:
             self._metadata["css"] = f.read()
 
-    def render(self, feed: str, writer: IO[str]) -> None:
+    def render(self, reader: IO[str], writer: IO[str]) -> None:
         self._set_default_metadata()
         self._writer = writer
-        self.feed(feed)
+
+        for line in reader:
+            self.feed(line)
+
         self.close()

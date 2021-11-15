@@ -55,11 +55,13 @@ setup(
     packages=[
         "edition",
         "edition.exceptions",
+        "edition.html",
         "edition.presses",
     ],
     package_data={
         "edition": ["py.typed"],
         "edition.exceptions": ["py.typed"],
+        "edition.html": ["py.typed"],
         "edition.presses": ["py.typed"],
     },
     python_requires=">=3.8",

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from html.parser import HTMLParser
 from typing import List, Optional, Tuple
 
-from edition.html import to_anchor
+from edition.html import to_anchor_id
 from edition.metadata import Metadata
 
 TAttribute = Tuple[str, Optional[str]]
@@ -27,7 +27,7 @@ class HtmlMetadataExtractor(HTMLParser):
             return ""
         wip = "<ol>"
         for t in ti:
-            wip += f'<li><a href="#{to_anchor(t.name)}">{t.name}</a>'
+            wip += f'<li><a href="#{to_anchor_id(t.name)}">{t.name}</a>'
             wip += self._toc_to_html(t.children)
             wip += "</li>"
 
