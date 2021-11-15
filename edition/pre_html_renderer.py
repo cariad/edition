@@ -25,10 +25,7 @@ class PreHtmlRenderer(HTMLParser):
 
     def handle_endtag(self, tag: str) -> None:
         if self._current_heading:
-            self._writer.write(
-                f'<a name="{to_anchor(self._current_heading_text)}"></a>'
-            )
-            self._writer.write(f"<{tag}>{self._current_heading_text}</{tag}>")
+            self._writer.write(f'<{tag}>{self._current_heading_text}<a id="{to_anchor(self._current_heading_text)}"></a></{tag}>')
             self._current_heading = False
         else:
             self._writer.write(f"</{tag}>")

@@ -9,7 +9,7 @@ TAttribute = Tuple[str, Optional[str]]
 
 
 class EditionHtmlRenderer(HTMLParser):
-    def __init__(self, metadata: Metadata) -> None:
+    def __init__(self, metadata: Optional[Metadata] = None) -> None:
         super().__init__()
         self._metadata = metadata
         self._writer: IO[str] = stdout
@@ -38,6 +38,9 @@ class EditionHtmlRenderer(HTMLParser):
         return wip
 
     def _get_value(self, key: str) -> str:
+        if not self._metadata:
+            return ""
+
         if key == "favicon-href":
             if emoji := self._get_value("favicon-emoji"):
                 return f"data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>{emoji}</text></svg>"
@@ -97,6 +100,8 @@ class EditionHtmlRenderer(HTMLParser):
         return " ".join([self.make_attribute(a) for a in attributes])
 
     def _set_default_metadata(self) -> None:
+        if not self._metadata:
+            return None
         with open_text(__package__, "style.css") as f:
             self._metadata["css"] = f.read()
 
