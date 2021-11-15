@@ -1,4 +1,3 @@
-from importlib.resources import open_text
 from io import StringIO
 from typing import IO
 
@@ -10,6 +9,7 @@ from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name, guess_lexer
 
+from edition.html import get_html_template
 from edition.html_metadata_extractor import HtmlMetadataExtractor
 from edition.html_renderer import EditionHtmlRenderer
 from edition.pre_html_renderer import PreHtmlRenderer
@@ -65,19 +65,20 @@ class HtmlPress(Press):
         )
         HtmlMetadataExtractor(html_body, self._metadata).append_metadata()
 
-        # Adds anchors before headers:
-        pre_html = StringIO()
-        PreHtmlRenderer().render(html_body, pre_html)
-        html_body = pre_html.getvalue()
+        processed_html = StringIO()
+
+        # This initial run adds anchors to headers. This could probably be added
+        # to EditionHtmlRenderer, but remember to feed in just the body here:
+        PreHtmlRenderer().render(html_body, processed_html)
+
+        processed_html.seek(0)
 
         html_body_writer = StringIO()
-        EditionHtmlRenderer(metadata=self._metadata).render(
-            feed=html_body, writer=html_body_writer
-        )
 
-        with open_text(__package__, "document.html") as f:
-            feed = f.read()
+        edition_renderer = EditionHtmlRenderer(metadata=self._metadata)
+        edition_renderer.render(reader=processed_html, writer=html_body_writer)
 
         self._metadata["body"] = html_body_writer.getvalue()
 
-        EditionHtmlRenderer(metadata=self._metadata).render(feed=feed, writer=writer)
+        with get_html_template() as f:
+            edition_renderer.render(reader=f, writer=writer)

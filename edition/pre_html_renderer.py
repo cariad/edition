@@ -2,7 +2,7 @@ from html.parser import HTMLParser
 from sys import stdout
 from typing import IO, List, Optional, Tuple
 
-from edition.html import to_anchor
+from edition.html import to_anchor_id
 
 TAttribute = Tuple[str, Optional[str]]
 
@@ -26,7 +26,7 @@ class PreHtmlRenderer(HTMLParser):
     def handle_endtag(self, tag: str) -> None:
         if self._current_heading:
             self._writer.write(
-                f'<{tag}>{self._current_heading_text}<a id="{to_anchor(self._current_heading_text)}"></a></{tag}>'
+                f'<{tag}>{self._current_heading_text}<a id="{to_anchor_id(self._current_heading_text)}"></a></{tag}>'
             )
             self._current_heading = False
         else:
