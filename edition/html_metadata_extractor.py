@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from html.parser import HTMLParser
 from typing import List, Optional, Tuple
 
-from edition.metadata import Metadata
 from edition.html import to_anchor
+from edition.metadata import Metadata
 
 TAttribute = Tuple[str, Optional[str]]
 

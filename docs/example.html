@@ -1,4 +1,13 @@
-body {
+<!doctype html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Edition example</title>
+    
+    
+    <style>body {
   /* Thanks! https://systemfontstack.com */
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
 }
@@ -215,3 +224,26 @@ article > .footnotes > hr {
 article > .footnotes p {
   margin-bottom: 1rem;
 }
+</style>
+  </head>
+
+  <body>
+    <article>
+        <h1>Edition example</h1>
+<p>Save this file to your local machine as <code>example-source.md</code> then run:</p>
+<div class="highlight"><pre><span></span>edition example-source.md example.html --press html
+</pre></div>
+
+<p>Now open <code>example.html</code> in a web browser. The code example below will be complete.</p>
+<div class="highlight"><pre><span></span>python --version
+</pre></div>
+
+
+
+<pre class="nohighlight thtml"><code class="thtml-code">Python 3.10.0<br /></code></pre>
+
+
+    </article>
+  </body>
+
+</html>

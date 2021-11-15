@@ -15,6 +15,12 @@ class EditionHtmlRenderer(HTMLParser):
         self._writer: IO[str] = stdout
         self._last_data: str = ""
 
+    def handle_comment(self, data: str) -> None:
+        print(data)
+        self._writer.write("&lt;!--")
+        self._writer.write(data)
+        self._writer.write("--&gt;")
+
     def handle_data(self, data: str) -> None:
         self._writer.write(data)
         self._last_data = data

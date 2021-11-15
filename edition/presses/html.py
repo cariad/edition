@@ -1,19 +1,20 @@
+from importlib.resources import open_text
+from io import StringIO
 from typing import IO
 
 from dinject.enums import Content, Host
 from dinject.types import ParserOptions
 from markdown import markdown
+from mdcode import get_blocks
+from pygments import highlight
+from pygments.formatters import HtmlFormatter
+from pygments.lexers import get_lexer_by_name, guess_lexer
 
 from edition.html_metadata_extractor import HtmlMetadataExtractor
 from edition.html_renderer import EditionHtmlRenderer
-from edition.presses.press import Press
-from mdcode import get_blocks
-from io import StringIO
-from pygments import highlight
-from pygments.lexers import get_lexer_by_name, guess_lexer
-from pygments.formatters import HtmlFormatter
 from edition.pre_html_renderer import PreHtmlRenderer
-from importlib.resources import open_text
+from edition.presses.press import Press
+
 
 class HtmlPress(Press):
     @property
@@ -30,7 +31,7 @@ class HtmlPress(Press):
             # Copy over the lines until this block:
             if not block.source_index:
                 raise Exception()
-            while(index < block.source_index):
+            while index < block.source_index:
                 writer.write(lines[index])
                 writer.write("\n")
                 index += 1
@@ -46,7 +47,7 @@ class HtmlPress(Press):
             index = block.source_index + block.source_length
 
         # Copy all remaining lines:
-        while(index < len(lines)):
+        while index < len(lines):
             writer.write(lines[index])
             writer.write("\n")
             index += 1
@@ -57,7 +58,11 @@ class HtmlPress(Press):
         self._markdown_body = self._replace_blocks_with_pygments(self._markdown_body)
 
     def _press(self, writer: IO[str]) -> None:
-        html_body = markdown(self._markdown_body, output_format="html")
+        html_body = markdown(
+            self._markdown_body,
+            extensions=["markdown.extensions.tables"],
+            output_format="html",
+        )
         HtmlMetadataExtractor(html_body, self._metadata).append_metadata()
 
         # Adds anchors before headers:
@@ -66,7 +71,9 @@ class HtmlPress(Press):
         html_body = pre_html.getvalue()
 
         html_body_writer = StringIO()
-        EditionHtmlRenderer(metadata=self._metadata).render(feed=html_body, writer=html_body_writer)
+        EditionHtmlRenderer(metadata=self._metadata).render(
+            feed=html_body, writer=html_body_writer
+        )
 
         with open_text(__package__, "document.html") as f:
             feed = f.read()
