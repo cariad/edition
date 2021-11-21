@@ -8,7 +8,9 @@
     <meta name="author" content="Cariad Eccleston" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📰</text></svg>" />
     <style>
-body {
+body,
+li > code,
+p > code {
   /* Thanks! https://systemfontstack.com */
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
 }
@@ -123,7 +125,7 @@ nav.toc li {
   margin-bottom: 0.1rem;
 }
 
-p, li {
+p, li, pre {
   line-height: 1.6;
 }
 
@@ -152,11 +154,10 @@ p > code {
 
 li > code,
 p > code {
-  font-weight: 500;
+  font-weight: bold;
 }
 
 sup {
-  /* font-size: 0.9rem; */
   padding-left: 0.2rem;
   padding-right: 0.2rem;
 }
