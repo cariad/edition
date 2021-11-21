@@ -126,7 +126,7 @@ jobs:
             - pipenv-{{ checksum "Pipfile.lock" }}
             - pipenv-
       - run: pipenv sync --dev
-      - run: pipenv run ./test.sh
+      - run: pipenv run test
       - codecov/upload:
           file: coverage.xml
 
@@ -141,7 +141,7 @@ jobs:
             - pipenv-{{ checksum "Pipfile.lock" }}
             - pipenv-
       - run: pipenv sync --dev
-      - run: pipenv run ./build.sh
+      - run: pipenv run build
       - run: pip install dist/*
       - run: pipenv run ./scripts/test-cli.sh
       - run: if [[ -z "${CIRCLE_TAG}" ]]; then circleci-agent step halt; fi
