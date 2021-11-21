@@ -169,6 +169,11 @@ workflows:
       - shell:
           context:
             - python
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /.*/
 
       - test_types:
           context:
@@ -181,6 +186,11 @@ workflows:
       - test:
           context:
             - python
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /.*/
 
       - build:
           context:
