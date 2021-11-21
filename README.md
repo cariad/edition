@@ -8,15 +8,29 @@ In fact, the document you're reading right now was pressed by Edition.
 
 <edition value="toc" />
 
-## ✨ Highlights
+## Highlights
 
-- **Write your documentation once.**<br />Edition will give you an `README.md` to upload to your project, PyPI and all the rest, _and_ a beautiful HTML page ready to upload directly to GitHub or GitLab Pages.
+- **Write your documentation once.**<br />Edition will press you a `README.md` to upload to your project, PyPI et al, _and_ a beautiful HTML page ready to upload directly to GitHub or GitLab Pages.
 - **Works out of the box.**<br />With one command, your existing `README.md` can be converted to beautiful HTML.
 - **Embed your code samples.**<br />Edition will execute your code and embed the results.
 
-## ✋ Example
+## Getting started
 
-Create this Markdown document named `example-source.md`:
+### Prerequisites
+
+Edition requires **Python 3.8** or later.
+
+### Installation
+
+Install Edition via `pip`:
+
+```bash
+pip install edition
+```
+
+### Quick-start example
+
+Create this Markdown document as `example-source.md`:
 
 ~~~markdown
 # Edition example
@@ -41,48 +55,38 @@ python --version
 Run:
 
 ```bash
-python -m edition docs/example-source.md docs/example.html --press html
+edition docs/example-source.md docs/example.html --press html
 ```
 
 <!--edition-exec as=markdown fence=backticks host=shell range=start-->
 
 ```text
-warn: no value for author
-warn: no value for favicon-emoji
+warning: no value for "author"
+warning: no value for "favicon-emoji"
+Pressed: docs/example.html
 ```
 
 <!--edition-exec range=end-->
 
-This will generate [example.html](example.html). Open that file in a web browser.
+Fun fact! The execution example above is executed every time I press this documentation. That means you can see the actual [example.html](https://cariad.github.io/edition/example.html) that was generated.
 
-## 🤔 Is Edition right for you?
+## Usage
 
-Edition could be great for you if:
+### Command line
 
-- You've tried other documentation tools and they were more complex or time-consuming than you care for
-- Your documentation fits on a single page
+Edition takes three command line arguments:
 
-Edition is not a feature-matching substitute for Sphinx, mkdocs, pdoc or the like, nor is Edition aiming to be.
+- Source file
+- Destination file
+- `--press html` to press HTML or `--press markdown` to press Markdown
 
-If you need multi-page documentation, docstring parsing or fine configuration then Edition is not right for you.
-
-## ⚙️ Getting Started
-
-Edition requires **Python 3.8** or later.
-
-Install Edition via `pip`:
-
-```bash
-pip install edition
-```
-
-## 📄 Creating your source document
+### Creating your source document
 
 Your **source document** is the Markdown document from which all your editions will be pressed.
 
 Any Markdown document you already have -- like your project's `README.md` -- is already a valid source document, but we can add some front matter and additional markup to help guide the presses.
 
-### Front matter
+#### Front matter
 
 The following front matter properties come into play only when pressing HTML.
 
@@ -106,9 +110,9 @@ title: Embedded Example
 # Example
 ```
 
-### Markup
+#### Markup
 
-#### Code execution
+##### Code execution
 
 To have Edition execute your code then embed the result:
 
@@ -127,32 +131,34 @@ print("Hello, world!")
 
 Currently only `bash` and `python` code blocks are supported. More languages can be added if they are [requested](#contributing).
 
-#### Table of Contents
+##### Table of Contents
 
 ```html
 <edition value="toc" />
 ```
 
-## 🍰 Contributing
+## Project
 
-Thank you for considering contribution!
+### Contributing
 
 To contribute a bug report, enhancement or feature request, please raise an issue at [github.com/cariad/edition/issues](https://github.com/cariad/edition/issues).
 
 If you want to contribute a code change, please raise an issue first so we can chat about the direction you want to take.
 
-## 👮‍♀️ Licence
+### Licence
 
 Edition is released at [github.com/cariad/edition](https://github.com/cariad/edition) under the MIT Licence.
 
 See [LICENSE](https://github.com/cariad/edition/blob/main/LICENSE) for more information.
 
-## 👩‍💻 The Author
+### Author
 
 Hello! 👋 I'm **Cariad Eccleston** and I'm a freelance DevOps and backend engineer. My contact details are available on my personal wiki at [cariad.earth](https://cariad.earth).
 
 Please consider supporting my open source projects by [sponsoring me on GitHub](https://github.com/sponsors/cariad/).
 
-## 🔗 Related Projects
+### Acknowledgements
 
+- The beautiful [Dracula for Pygments theme](https://github.com/dracula/pygments) is copyright of Dracula Theme and used under the MIT licence.
 - Epic thanks to John Gruber for releasing the [Markdown specification](https://daringfireball.net/projects/markdown/).
+- Code injection is performed by [dinject](https://github.com/cariad/dinject), copyright of Cariad Eccleston and used under the MIT licence.
