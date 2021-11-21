@@ -72,6 +72,7 @@ class Cli:
             self._press.press(writer=render)
             if self._output:
                 render.close()
+                print(f"Pressed: {self._output}")
             return 0
 
         writer.write(self._parser.format_help())
