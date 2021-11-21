@@ -53,7 +53,7 @@ class EditionHtmlRenderer(HTMLParser):
             return ""
         value = str(self._metadata.get(key, ""))
         if not value:
-            print(f"warn: no value for {key}")
+            print(f'warning: no value for "{key}"')
         return value
 
     def handle_startendtag(self, tag: str, attrs: List[TAttribute]) -> None:
@@ -109,7 +109,10 @@ class EditionHtmlRenderer(HTMLParser):
         if not self._metadata:
             return None
         with get_css() as f:
-            self._metadata["css"] = f.read()
+            existing_css = str(self._metadata.get("css", ""))
+            new_css = f.read()
+            if new_css not in existing_css:
+                self._metadata["css"] = existing_css + "\n" + new_css
 
     def render(self, reader: IO[str], writer: IO[str]) -> None:
         self._set_default_metadata()
