@@ -18,9 +18,7 @@ def test_to_anchor_id(text: str, expect: str) -> None:
 
 def test_get_css() -> None:
     with get_css() as f:
-        actual = f.read()
-    assert actual.startswith("body {")
-    assert actual.endswith("margin-top: calc(var(--paragraph-spacing) * 2);\n}\n")
+        assert "body {" in f.read()
 
 
 def test_get_html_template() -> None:
