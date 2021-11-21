@@ -1,12 +1,10 @@
-body,
-li > code,
-p > code {
+body {
   /* Thanks! https://systemfontstack.com */
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
 }
 
 body {
-  --red: red;
+  --accent: #f1fa8c; /* Copied from Dracula */
   --paragraph-spacing: 2rem;
   --paragraph-spacing-smaller: 0.6rem;
 
@@ -129,22 +127,20 @@ blockquote {
   padding-left: 1rem;
 }
 
-
-
-
 h2 > code,
 li > code,
 p > code {
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 0.2em;
-  text-decoration-thickness: 0.12rem;
-  text-decoration-color: var(--red);
-}
+  background: var(--accent);
+  border-radius: 0.3rem;
 
-li > code,
-p > code {
-  font-weight: bold;
+  font-size: 0.95rem;
+
+  letter-spacing: 0.04rem;
+
+  padding-top: 0.4rem;
+  padding-bottom: 0.2rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 sup {
@@ -199,12 +195,10 @@ nav > ul > li {
   margin-right: 1rem;
 }
 
-
-h2+h3 {
-  margin-top: 0;
-}
-
-h3+h4 {
+h2+h3,
+h3+h4,
+h4+h5,
+h5+h6 {
   margin-top: 0;
 }
 
@@ -212,7 +206,6 @@ h2, h3, h4, h5, h6 {
   margin-bottom: var(--paragraph-spacing);
   margin-top: calc(var(--paragraph-spacing) * 2);
 }
-
 
 /* Dracula Theme v1.2.5
  *

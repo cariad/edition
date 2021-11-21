@@ -10,19 +10,17 @@ In fact, the document you're reading right now was pressed by Edition.
 
 ## Highlights
 
-- **Write your documentation once.**<br />Edition will press you a `README.md` to upload to your project, PyPI et al, _and_ a beautiful HTML page ready to upload directly to GitHub or GitLab Pages.
-- **Works out of the box.**<br />With one command, your existing `README.md` can be converted to beautiful HTML.
-- **Embed your code samples.**<br />Edition will execute your code and embed the results.
+- **Write your documentation once.**<br />Edition presses README.md and HTML documents ready to upload directly to GitHub Pages or any other static hosting, all from the same source.
+- **Works out of the box.**<br />With one command, Edition converts your existing README.md to beautiful HTML: `edition README.md index.html --press html`
+- **Embed your code samples.**<br />Edition executes embedded code and injects the results automatically.
 
 ## Getting started
 
-### Prerequisites
+### Installation
 
 Edition requires **Python 3.8** or later.
 
-### Installation
-
-Install Edition via `pip`:
+Install Edition via pip:
 
 ```bash
 pip install edition
@@ -68,7 +66,7 @@ Pressed: docs/example.html
 
 <!--edition-exec range=end-->
 
-Fun fact! The execution example above is executed every time I press this documentation. That means you can see the actual [example.html](https://cariad.github.io/edition/example.html) that was generated.
+Fun fact! The code above is executed every time I press this documentation. That gives me confidence that it works and lets you see the actual [example.html](https://cariad.github.io/edition/example.html) it generates.
 
 ## Usage
 
