@@ -11,26 +11,24 @@ class PreHtmlRenderer(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self._writer: IO[str] = stdout
-        self._current_heading = False
+        self._current_heading: Optional[str] = None
         self._current_heading_text: str = ""
 
     def handle_data(self, data: str) -> None:
         if self._current_heading:
             self._current_heading_text += data
-        else:
-            self._writer.write(data)
+        self._writer.write(data)
 
     def handle_decl(self, decl: str) -> None:
         self._writer.write(f"<!{decl}>")
 
     def handle_endtag(self, tag: str) -> None:
-        if self._current_heading:
+        if self._current_heading and self._current_heading == tag:
             self._writer.write(
-                f'<{tag}>{self._current_heading_text}<a id="{to_anchor_id(self._current_heading_text)}"></a></{tag}>'
+                f'<a id="{to_anchor_id(self._current_heading_text)}"></a>'
             )
-            self._current_heading = False
-        else:
-            self._writer.write(f"</{tag}>")
+            self._current_heading = None
+        self._writer.write(f"</{tag}>")
 
     def handle_startendtag(self, tag: str, attrs: List[TAttribute]) -> None:
         attributes = self.make_attributes(attrs) if attrs else ""
@@ -38,11 +36,9 @@ class PreHtmlRenderer(HTMLParser):
         self._writer.write(f"<{inner} />")
 
     def handle_starttag(self, tag: str, attrs: Optional[List[TAttribute]]) -> None:
-
         if tag in ["h2", "h3", "h4", "h5", "h6"]:
-            self._current_heading = True
+            self._current_heading = tag
             self._current_heading_text = ""
-            return
 
         attributes = self.make_attributes(attrs) if attrs else ""
         inner = f"{tag} {attributes}".strip()
