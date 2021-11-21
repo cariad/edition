@@ -181,11 +181,6 @@ workflows:
       - test:
           context:
             - python
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              only: /.*/
 
       - build:
           context:
