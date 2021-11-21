@@ -8,15 +8,13 @@
     <meta name="author" content="Cariad Eccleston" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📰</text></svg>" />
     <style>
-body,
-li > code,
-p > code {
+body {
   /* Thanks! https://systemfontstack.com */
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
 }
 
 body {
-  --red: red;
+  --accent: #f1fa8c; /* Copied from Dracula */
   --paragraph-spacing: 2rem;
   --paragraph-spacing-smaller: 0.6rem;
 
@@ -139,22 +137,20 @@ blockquote {
   padding-left: 1rem;
 }
 
-
-
-
 h2 > code,
 li > code,
 p > code {
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 0.2em;
-  text-decoration-thickness: 0.12rem;
-  text-decoration-color: var(--red);
-}
+  background: var(--accent);
+  border-radius: 0.3rem;
 
-li > code,
-p > code {
-  font-weight: bold;
+  font-size: 0.95rem;
+
+  letter-spacing: 0.04rem;
+
+  padding-top: 0.4rem;
+  padding-bottom: 0.2rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 sup {
@@ -209,12 +205,10 @@ nav > ul > li {
   margin-right: 1rem;
 }
 
-
-h2+h3 {
-  margin-top: 0;
-}
-
-h3+h4 {
+h2+h3,
+h3+h4,
+h4+h5,
+h5+h6 {
   margin-top: 0;
 }
 
@@ -222,7 +216,6 @@ h2, h3, h4, h5, h6 {
   margin-bottom: var(--paragraph-spacing);
   margin-top: calc(var(--paragraph-spacing) * 2);
 }
-
 
 /* Dracula Theme v1.2.5
  *
@@ -346,18 +339,17 @@ h2, h3, h4, h5, h6 {
 <p><strong>WARNING: This is a pre-release project.</strong></p>
 <p><strong>Edition</strong> is a command-line application for creating beautiful HTML and Markdown editions of your projects' documentation.</p>
 <p>In fact, the document you're reading right now was pressed by Edition.</p>
-<p><nav class="toc"><ol><li><a href="#highlights">Highlights</a></li><li><a href="#getting-started">Getting started</a><ol><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#installation">Installation</a></li><li><a href="#quick-start-example">Quick-start example</a></li></ol></li><li><a href="#usage">Usage</a><ol><li><a href="#command-line">Command line</a></li><li><a href="#creating-your-source-document">Creating your source document</a></li></ol></li><li><a href="#project">Project</a><ol><li><a href="#contributing">Contributing</a></li><li><a href="#licence">Licence</a></li><li><a href="#author">Author</a></li><li><a href="#acknowledgements">Acknowledgements</a></li></ol></li></ol></nav></p>
+<p><nav class="toc"><ol><li><a href="#highlights">Highlights</a></li><li><a href="#getting-started">Getting started</a><ol><li><a href="#installation">Installation</a></li><li><a href="#quick-start-example">Quick-start example</a></li></ol></li><li><a href="#usage">Usage</a><ol><li><a href="#command-line">Command line</a></li><li><a href="#creating-your-source-document">Creating your source document</a></li></ol></li><li><a href="#project">Project</a><ol><li><a href="#contributing">Contributing</a></li><li><a href="#licence">Licence</a></li><li><a href="#author">Author</a></li><li><a href="#acknowledgements">Acknowledgements</a></li></ol></li></ol></nav></p>
 <h2>Highlights<a id="highlights"></a></h2>
 <ul>
-<li><strong>Write your documentation once.</strong><br />Edition will press you a <code>README.md</code> to upload to your project, PyPI et al, <em>and</em> a beautiful HTML page ready to upload directly to GitHub or GitLab Pages.</li>
-<li><strong>Works out of the box.</strong><br />With one command, your existing <code>README.md</code> can be converted to beautiful HTML.</li>
-<li><strong>Embed your code samples.</strong><br />Edition will execute your code and embed the results.</li>
+<li><strong>Write your documentation once.</strong><br />Edition presses README.md and HTML documents ready to upload directly to GitHub Pages or any other static hosting, all from the same source.</li>
+<li><strong>Works out of the box.</strong><br />With one command, Edition converts your existing README.md to beautiful HTML: <code>edition README.md index.html --press html</code></li>
+<li><strong>Embed your code samples.</strong><br />Edition executes embedded code and injects the results automatically.</li>
 </ul>
 <h2>Getting started<a id="getting-started"></a></h2>
-<h3>Prerequisites<a id="prerequisites"></a></h3>
-<p>Edition requires <strong>Python 3.8</strong> or later.</p>
 <h3>Installation<a id="installation"></a></h3>
-<p>Install Edition via <code>pip</code>:</p>
+<p>Edition requires <strong>Python 3.8</strong> or later.</p>
+<p>Install Edition via pip:</p>
 <div class="highlight"><pre><span></span>pip install edition
 </pre></div>
 
@@ -392,7 +384,7 @@ python --version
 
 
 
-<p>Fun fact! The execution example above is executed every time I press this documentation. That means you can see the actual <a href="https://cariad.github.io/edition/example.html">example.html</a> that was generated.</p>
+<p>Fun fact! The code above is executed every time I press this documentation. That gives me confidence that it works and lets you see the actual <a href="https://cariad.github.io/edition/example.html">example.html</a> it generates.</p>
 <h2>Usage<a id="usage"></a></h2>
 <h3>Command line<a id="command-line"></a></h3>
 <p>Edition takes three command line arguments:</p>
