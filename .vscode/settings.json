@@ -6,6 +6,8 @@
     "lexer",
     "lexers",
     "mdcode",
-    "mypy"
+    "mypy",
+    "pygments",
+    "xlarge"
   ]
 }

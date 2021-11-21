@@ -40,9 +40,6 @@ class HtmlPress(Press):
             lexer = get_lexer_by_name(block.lang) if block.lang else guess_lexer(script)
 
             formatter = HtmlFormatter()
-            self._metadata["css"] = self._metadata.get("css", "")
-            self._metadata["css"] += formatter.get_style_defs()
-
             highlight(script, lexer, formatter, writer)
             index = block.source_index + block.source_length
 
