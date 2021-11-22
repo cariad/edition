@@ -1,11 +1,10 @@
-from sys import argv, stdout
-
+from edition import __version__
 from edition.cli import Cli
 
 
-def cli_entry() -> None:
-    exit(Cli(argv[1:]).invoke(stdout))
+def entry() -> None:
+    Cli.invoke_and_exit(app_version=__version__)
 
 
 if __name__ == "__main__":
-    cli_entry()
+    entry()
