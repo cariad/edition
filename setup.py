@@ -35,14 +35,15 @@ setup(
     author="Cariad Eccleston",
     author_email="cariad@cariad.earth",
     classifiers=classifiers,
-    description="Lightweight documentation generator",
+    description="Creates beautiful HTML and Markdown editions of your documentation",
     entry_points={
         "console_scripts": [
-            "edition=edition.__main__:cli_entry",
+            "edition=edition.__main__:entry",
         ],
     },
     include_package_data=True,
     install_requires=[
+        "cline==1.0.0a4",
         "dinject~=1.2",
         "markdown~=3.3.4",
         "pygments~=2.10",

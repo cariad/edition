@@ -17,6 +17,7 @@ types-pygments = "*"
 yamllint = "*"
 
 [packages]
+cline = "==1.0.0a4"
 dinject = "~=1.2"
 markdown = "~=3.3"
 python-frontmatter = "~=1.0.0"

@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import Dict, List, Tuple, Type, cast
 
 import frontmatter  # pyright: reportMissingTypeStubs=false
@@ -27,11 +26,6 @@ def make(key: str, markdown_content: str) -> "Press":
     )  # pyright: reportUnknownMemberType=false
 
     return press(markdown_body=markdown_body, metadata=metadata)
-
-
-def make_from_file(key: str, path: Path) -> "Press":
-    with open(path, "r") as f:
-        return make(key=key, markdown_content=f.read())
 
 
 def register(key: str, press: Type[Press]) -> None:
