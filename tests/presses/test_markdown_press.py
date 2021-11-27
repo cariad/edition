@@ -1,5 +1,7 @@
 from io import StringIO
 
+from comprehemd import read_outline
+
 from edition import Metadata
 from edition.presses import MarkdownPress
 
@@ -15,3 +17,40 @@ This is just some _Markdown_.
     )
     press.press(writer)
     assert writer.getvalue().startswith("# Hello!")
+
+
+def test__do_not_escape_html_comments() -> None:
+    writer = StringIO()
+    press = MarkdownPress(
+        markdown_body="For example, `<!--foo-->`.",
+        metadata=Metadata(),
+    )
+    press.press(writer)
+    assert writer.getvalue() == "For example, `<!--foo-->`.\n"
+
+
+def test__table_of_contents() -> None:
+    body = """# one
+
+<edition value="toc" />
+
+## two
+"""
+    metadata = Metadata(toc=read_outline(StringIO(body)))
+
+    writer = StringIO()
+    press = MarkdownPress(
+        markdown_body=body,
+        metadata=metadata,
+    )
+    press.press(writer)
+    assert (
+        writer.getvalue()
+        == """# one
+
+- [one](#one)
+  - [two](#two)
+
+## two
+"""
+    )

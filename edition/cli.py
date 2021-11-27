@@ -20,6 +20,8 @@ class Cli(ArgumentParserCli):
             nargs="?",
         )
 
+        parser.add_argument("--log-level", help="log level", nargs="?")
+
         parser.add_argument(
             "--press",
             help="output format",

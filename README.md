@@ -6,7 +6,23 @@
 
 In fact, the document you're reading right now was pressed by Edition.
 
-<edition value="toc" />
+- [📰 Edition](#-edition)
+  - [Highlights](#highlights)
+  - [Getting started](#getting-started)
+    - [Installation](#installation)
+    - [Quick-start example](#quick-start-example)
+  - [Usage](#usage)
+    - [Command line](#command-line)
+    - [Creating your source document](#creating-your-source-document)
+      - [Front matter](#front-matter)
+      - [Markup](#markup)
+        - [Code execution](#code-execution)
+        - [Table of Contents](#table-of-contents)
+  - [Project](#project)
+    - [Contributing](#contributing)
+    - [Licence](#licence)
+    - [Author](#author)
+    - [Acknowledgements](#acknowledgements)
 
 ## Highlights
 
@@ -103,8 +119,8 @@ favicon-emoji: 🍕
 # If "title" was omitted then the top-level "Example"
 # heading would be used instead:
 title: Embedded Example
-
 ---
+
 # Example
 ```
 
