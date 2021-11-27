@@ -9,6 +9,8 @@ class PressArguments:
     Press key.
     """
 
+    log_level: str
+
     output: Path
     """
     Path to write to.

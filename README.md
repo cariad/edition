@@ -119,8 +119,8 @@ favicon-emoji: 🍕
 # If "title" was omitted then the top-level "Example"
 # heading would be used instead:
 title: Embedded Example
-
 ---
+
 # Example
 ```
 

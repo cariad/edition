@@ -1,3 +1,4 @@
+from logging import getLogger
 from pathlib import Path
 
 from cline import CommandLineArguments, Task
@@ -12,11 +13,15 @@ class PressTask(Task[PressArguments]):
         args.assert_string("press", keys())
         return PressArguments(
             key=args.get_string("press"),
-            source=Path(args.get_string("source")),
+            log_level=args.get_string("log_level", "CRITICAL").upper(),
             output=Path(args.get_string("output")),
+            source=Path(args.get_string("source")),
         )
 
     def invoke(self) -> int:
+        getLogger("edition").setLevel(self.args.log_level)
+        getLogger("comprehemd").setLevel(self.args.log_level)
+
         with open(self.args.source, "r") as f:
             press = make(key=self.args.key, markdown_content=f.read())
         with open(self.args.output, "w") as f:
