@@ -1,5 +1,5 @@
 from io import StringIO
-from typing import IO
+from typing import IO, Callable, Optional
 
 from dinject.enums import Content, Host
 from dinject.types import ParserOptions
@@ -10,8 +10,8 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name, guess_lexer
 
 from edition.html import get_html_template
-from edition.html_metadata_extractor import HtmlMetadataExtractor
 from edition.html_renderer import EditionHtmlRenderer
+from edition.html_toc_writer import HtmlTableOfContentsRenderer
 from edition.pre_html_renderer import PreHtmlRenderer
 from edition.presses.press import Press
 
@@ -60,7 +60,7 @@ class HtmlPress(Press):
             extensions=["markdown.extensions.tables"],
             output_format="html",
         )
-        HtmlMetadataExtractor(html_body, self._metadata).append_metadata()
+        # HtmlMetadataExtractor(html_body, self._metadata).append_metadata()
 
         processed_html = StringIO()
 
@@ -72,7 +72,14 @@ class HtmlPress(Press):
 
         html_body_writer = StringIO()
 
-        edition_renderer = EditionHtmlRenderer(metadata=self._metadata)
+        toc_writer: Optional[Callable[[IO[str]], None]] = None
+
+        if toc := self._metadata.get("toc", None):
+            toc_writer = HtmlTableOfContentsRenderer(outline=toc).render
+
+        edition_renderer = EditionHtmlRenderer(
+            metadata=self._metadata, toc_writer=toc_writer
+        )
         edition_renderer.render(reader=processed_html, writer=html_body_writer)
 
         self._metadata["body"] = html_body_writer.getvalue()

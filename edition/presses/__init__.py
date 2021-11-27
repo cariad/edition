@@ -1,6 +1,8 @@
+from io import StringIO
 from typing import Dict, List, Tuple, Type, cast
 
 import frontmatter  # pyright: reportMissingTypeStubs=false
+from comprehemd import read_outline
 
 from edition.exceptions import NoPressError
 from edition.metadata import Metadata
@@ -25,6 +27,7 @@ def make(key: str, markdown_content: str) -> "Press":
         frontmatter.parse(markdown_content),
     )  # pyright: reportUnknownMemberType=false
 
+    metadata["toc"] = read_outline(StringIO(markdown_content))
     return press(markdown_body=markdown_body, metadata=metadata)
 
 

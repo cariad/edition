@@ -1,6 +1,9 @@
 from html.parser import HTMLParser
+from io import StringIO
 from sys import stdout
-from typing import IO, Dict, List, Optional, Tuple
+from typing import IO, Callable, Dict, List, Optional, Tuple
+
+from dinject.inject import Reader
 
 from edition.html import get_css
 from edition.metadata import Metadata
@@ -9,9 +12,14 @@ TAttribute = Tuple[str, Optional[str]]
 
 
 class EditionHtmlRenderer(HTMLParser):
-    def __init__(self, metadata: Optional[Metadata] = None) -> None:
+    def __init__(
+        self,
+        metadata: Optional[Metadata] = None,
+        toc_writer: Optional[Callable[[IO[str]], None]] = None,
+    ) -> None:
         super().__init__()
         self._metadata = metadata
+        self._toc_writer = toc_writer
         self._writer: IO[str] = stdout
         self._last_data: str = ""
 
@@ -51,6 +59,14 @@ class EditionHtmlRenderer(HTMLParser):
             if emoji := self._get_value("favicon-emoji"):
                 return f"data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>{emoji}</text></svg>"
             return ""
+
+        if key == "toc":
+            if not self._toc_writer:
+                raise Exception("no toc writer")
+            writer = StringIO()
+            self._toc_writer(writer)
+            return writer.getvalue().rstrip()
+
         value = str(self._metadata.get(key, ""))
         if not value:
             print(f'warning: no value for "{key}"')
@@ -114,9 +130,12 @@ class EditionHtmlRenderer(HTMLParser):
             if new_css not in existing_css:
                 self._metadata["css"] = existing_css + "\n" + new_css
 
-    def render(self, reader: IO[str], writer: IO[str]) -> None:
+    def render(self, reader: Reader, writer: IO[str]) -> None:
         self._set_default_metadata()
         self._writer = writer
+
+        if isinstance(reader, str):
+            reader = StringIO(reader)
 
         for line in reader:
             self.feed(line)
