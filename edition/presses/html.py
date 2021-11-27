@@ -1,8 +1,7 @@
 from io import StringIO
 from typing import IO, Callable, Optional
 
-from comprehemd import MarkdownParser
-from comprehemd.blocks.code import CodeBlock
+from comprehemd import CodeBlock, HeadingBlock, MarkdownParser
 from dinject.enums import Content, Host
 from dinject.types import ParserOptions
 from markdown import markdown
@@ -44,12 +43,17 @@ class HtmlPress(Press):
         self._markdown_body = self._replace_blocks_with_pygments(self._markdown_body)
 
     def _press(self, writer: IO[str]) -> None:
+        original = StringIO(self._markdown_body)
+
+        for block in MarkdownParser().read(original):
+            if isinstance(block, HeadingBlock) and block.level == 1:
+                self._metadata["title"] = self._metadata.get("title", block.text)
+
         html_body = markdown(
             self._markdown_body,
             extensions=["markdown.extensions.tables"],
             output_format="html",
         )
-        # HtmlMetadataExtractor(html_body, self._metadata).append_metadata()
 
         processed_html = StringIO()
 
