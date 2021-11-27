@@ -43,7 +43,8 @@ setup(
     },
     include_package_data=True,
     install_requires=[
-        "cline==1.0.0a4",
+        "cline~=1.0",
+        "comprehemd==1.0.0a2",
         "dinject~=1.2",
         "markdown~=3.3.4",
         "pygments~=2.10",
