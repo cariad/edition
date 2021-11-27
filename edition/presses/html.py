@@ -1,10 +1,11 @@
 from io import StringIO
 from typing import IO, Callable, Optional
 
+from comprehemd import MarkdownParser
+from comprehemd.blocks.code import CodeBlock
 from dinject.enums import Content, Host
 from dinject.types import ParserOptions
 from markdown import markdown
-from mdcode import get_blocks
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import get_lexer_by_name, guess_lexer
@@ -23,31 +24,19 @@ class HtmlPress(Press):
 
     def _replace_blocks_with_pygments(self, body: str) -> str:
         writer = StringIO()
-        lines = body.splitlines()
 
-        index = 0
-        blocks = get_blocks(body)
-        for block in blocks:
-            # Copy over the lines until this block:
-            if not block.source_index:
-                raise Exception()
-            while index < block.source_index:
-                writer.write(lines[index])
+        for block in MarkdownParser().read(StringIO(body)):
+            if isinstance(block, CodeBlock):
+                lexer = (
+                    get_lexer_by_name(block.language)
+                    if block.language
+                    else guess_lexer(block.text)
+                )
+                formatter = HtmlFormatter()
+                highlight(block.text, lexer, formatter, writer)
+            else:
+                writer.write(block.source)
                 writer.write("\n")
-                index += 1
-
-            script = "\n".join(block.lines)
-            lexer = get_lexer_by_name(block.lang) if block.lang else guess_lexer(script)
-
-            formatter = HtmlFormatter()
-            highlight(script, lexer, formatter, writer)
-            index = block.source_index + block.source_length
-
-        # Copy all remaining lines:
-        while index < len(lines):
-            writer.write(lines[index])
-            writer.write("\n")
-            index += 1
 
         return writer.getvalue().rstrip()
 
