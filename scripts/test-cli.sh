@@ -14,7 +14,12 @@ assert() {
 assert "$(edition --version || true)" "${CIRCLE_TAG:-"-1.-1.-1"}"
 
 edition docs/source.md docs/test.html --press html
+echo "docs/test.html:"
+cat docs/test.html
+
 cmp --silent docs/index.html docs/test.html
 
 edition docs/source.md test.md --press markdown
+echo "test.md:"
+cat test.md
 cmp --silent README.md test.md
