@@ -63,7 +63,7 @@ below will be complete.
 python --version
 ```
 
-&lt;!--edition-exec--&gt;
+<!--edition-exec-->
 ~~~
 
 Run:
@@ -72,7 +72,7 @@ Run:
 edition docs/example-source.md docs/example.html --press html
 ```
 
-&lt;!--edition-exec as=markdown fence=backticks host=shell range=start--&gt;
+<!--edition-exec as=markdown fence=backticks host=shell range=start-->
 
 ```text
 warning: no value for "author"
@@ -80,7 +80,7 @@ warning: no value for "favicon-emoji"
 Pressed: docs/example.html
 ```
 
-&lt;!--edition-exec range=end--&gt;
+<!--edition-exec range=end-->
 
 Fun fact! The code above is executed every time I press this documentation. That gives me confidence that it works and lets you see the actual [example.html](https://cariad.github.io/edition/example.html) it generates.
 
@@ -131,7 +131,7 @@ title: Embedded Example
 To have Edition execute your code then embed the result:
 
 1. Create a regular Markdown code block
-1. Add `&lt;!--edition-exec--&gt;` after the block
+1. Add `<!--edition-exec-->` after the block
 
 For example:
 
@@ -140,7 +140,7 @@ For example:
 print("Hello, world!")
 ```
 
-&lt;!--edition-exec--&gt;
+<!--edition-exec-->
 ~~~
 
 Currently only `bash` and `python` code blocks are supported. More languages can be added if they are [requested](#contributing).
@@ -148,23 +148,7 @@ Currently only `bash` and `python` code blocks are supported. More languages can
 ##### Table of Contents
 
 ```html
-- [📰 Edition](#-edition)
-  - [Highlights](#highlights)
-  - [Getting started](#getting-started)
-    - [Installation](#installation)
-    - [Quick-start example](#quick-start-example)
-  - [Usage](#usage)
-    - [Command line](#command-line)
-    - [Creating your source document](#creating-your-source-document)
-      - [Front matter](#front-matter)
-      - [Markup](#markup)
-        - [Code execution](#code-execution)
-        - [Table of Contents](#table-of-contents)
-  - [Project](#project)
-    - [Contributing](#contributing)
-    - [Licence](#licence)
-    - [Author](#author)
-    - [Acknowledgements](#acknowledgements)
+<edition value="toc" />
 ```
 
 ## Project

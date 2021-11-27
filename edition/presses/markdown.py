@@ -15,14 +15,15 @@ class MarkdownPress(Press):
         return ParserOptions(force_content=Content.MARKDOWN, force_host=Host.SHELL)
 
     def _press(self, writer: IO[str]) -> None:
-        # First, find and expand <edition.../> tags.
-
         reader = StringIO(self._markdown_body)
         toc = self._metadata.get("toc", None)
 
         for block in MarkdownParser().read(reader):
-            # Ask EditionHtmlRenderer to check for and handle any <edition.../>
-            # tag in this block.
+            if not block.source.startswith("<edition "):
+                writer.write(block.source)
+                writer.write("\n")
+                continue
+
             renderer = EditionHtmlRenderer(
                 metadata=self._metadata,
                 toc_writer=toc.render if toc else None,
