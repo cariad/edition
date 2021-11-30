@@ -44,9 +44,7 @@ class EditionHtmlRenderer(HTMLParser):
         self._writer.write(f"<!{decl}>")
 
     def handle_endtag(self, tag: str) -> None:
-        popped = self._path.pop()
-        if popped != tag:
-            raise Exception(f"expected {popped} but ended {tag}")
+        self._path.pop()
         self._writer.write(f"</{tag}>")
 
     def _get_attrs(self, attrs: List[TAttribute]) -> Dict[str, str]:
