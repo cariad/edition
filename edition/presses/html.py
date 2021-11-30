@@ -1,9 +1,10 @@
 from io import StringIO
 from typing import IO, Callable, Optional
 
-from comprehemd import CodeBlock, HeadingBlock, MarkdownParser
+from comprehemd import CodeBlock, MarkdownParser
 from dinject.enums import Content, Host
 from dinject.types import ParserOptions
+from doutline.writers import render_html
 from markdown import markdown
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
@@ -11,7 +12,6 @@ from pygments.lexers import get_lexer_by_name, guess_lexer
 
 from edition.html import get_html_template
 from edition.html_renderer import EditionHtmlRenderer
-from edition.html_toc_writer import HtmlTableOfContentsRenderer
 from edition.pre_html_renderer import PreHtmlRenderer
 from edition.presses.press import Press
 
@@ -43,12 +43,6 @@ class HtmlPress(Press):
         self._markdown_body = self._replace_blocks_with_pygments(self._markdown_body)
 
     def _press(self, writer: IO[str]) -> None:
-        original = StringIO(self._markdown_body)
-
-        for block in MarkdownParser().read(original):
-            if isinstance(block, HeadingBlock) and block.level == 1:
-                self._metadata["title"] = self._metadata.get("title", block.text)
-
         html_body = markdown(
             self._markdown_body,
             extensions=["markdown.extensions.tables"],
@@ -65,10 +59,16 @@ class HtmlPress(Press):
 
         html_body_writer = StringIO()
 
-        toc_writer: Optional[Callable[[IO[str]], None]] = None
+        toc_writer: Optional[Callable[[IO[str], int, int], None]] = None
+        outline_root = self._metadata.get("outline", None)
 
-        if toc := self._metadata.get("toc", None):
-            toc_writer = HtmlTableOfContentsRenderer(outline=toc).render
+        if outline_root is not None:
+
+            def render_toc(writer: IO[str], hi: int, lo: int) -> None:
+                if outline_root:
+                    render_html(outline_root, writer, hi=hi, hyperlinks=True, lo=lo)
+
+            toc_writer = render_toc
 
         edition_renderer = EditionHtmlRenderer(
             metadata=self._metadata, toc_writer=toc_writer

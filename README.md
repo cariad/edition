@@ -6,23 +6,22 @@
 
 In fact, the document you're reading right now was pressed by Edition.
 
-- [📰 Edition](#-edition)
-  - [Highlights](#highlights)
-  - [Getting started](#getting-started)
-    - [Installation](#installation)
-    - [Quick-start example](#quick-start-example)
-  - [Usage](#usage)
-    - [Command line](#command-line)
-    - [Creating your source document](#creating-your-source-document)
-      - [Front matter](#front-matter)
-      - [Markup](#markup)
-        - [Code execution](#code-execution)
-        - [Table of Contents](#table-of-contents)
-  - [Project](#project)
-    - [Contributing](#contributing)
-    - [Licence](#licence)
-    - [Author](#author)
-    - [Acknowledgements](#acknowledgements)
+- [Highlights](#highlights)
+- [Getting started](#getting-started)
+  - [Installation](#installation)
+  - [Quick-start example](#quick-start-example)
+- [Usage](#usage)
+  - [Command line](#command-line)
+  - [Creating your source document](#creating-your-source-document)
+    - [Front matter](#front-matter)
+    - [Markup](#markup)
+      - [Code execution](#code-execution)
+      - [Table of Contents](#table-of-contents)
+- [Project](#project)
+  - [Contributing](#contributing)
+  - [Licence](#licence)
+  - [Author](#author)
+  - [Acknowledgements](#acknowledgements)
 
 ## Highlights
 
@@ -75,8 +74,6 @@ edition docs/example-source.md docs/example.html --press html
 <!--edition-exec as=markdown fence=backticks host=shell range=start-->
 
 ```text
-warning: no value for "author"
-warning: no value for "favicon-emoji"
 Pressed: docs/example.html
 ```
 
@@ -147,8 +144,24 @@ Currently only `bash` and `python` code blocks are supported. More languages can
 
 ##### Table of Contents
 
+To insert a table of contents:
+
 ```html
 <edition value="toc" />
+```
+
+You can optionally specify "hi" and "lo" values to restrict the table to a range of headings.
+
+For example, to exclude the title and start at second-level headings:
+
+```html
+<edition value="toc" hi="2" />
+```
+
+To exclude any headings below level three:
+
+```html
+<edition value="toc" lo="2" />
 ```
 
 ## Project

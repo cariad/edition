@@ -1,5 +1,6 @@
 from html.parser import HTMLParser
 from io import StringIO
+from logging import getLogger
 from sys import stdout
 from typing import IO, Callable, Dict, List, Optional, Tuple
 
@@ -15,13 +16,15 @@ class EditionHtmlRenderer(HTMLParser):
     def __init__(
         self,
         metadata: Optional[Metadata] = None,
-        toc_writer: Optional[Callable[[IO[str]], None]] = None,
+        toc_writer: Optional[Callable[[IO[str], int, int], None]] = None,
     ) -> None:
         super().__init__()
+        self._logger = getLogger("edition")
         self._metadata = metadata
         self._toc_writer = toc_writer
         self._writer: IO[str] = stdout
         self._last_data: str = ""
+        self._path: List[str] = []
 
     def handle_comment(self, data: str) -> None:
         """
@@ -43,6 +46,7 @@ class EditionHtmlRenderer(HTMLParser):
         self._writer.write(f"<!{decl}>")
 
     def handle_endtag(self, tag: str) -> None:
+        self._path.pop()
         self._writer.write(f"</{tag}>")
 
     def _get_attrs(self, attrs: List[TAttribute]) -> Dict[str, str]:
@@ -51,12 +55,12 @@ class EditionHtmlRenderer(HTMLParser):
             wip[str(a[0])] = str(a[1])
         return wip
 
-    def _get_value(self, key: str) -> str:
+    def _get_value(self, key: str, attributes: Dict[str, str]) -> str:
         if not self._metadata:
             return ""
 
         if key == "favicon-href":
-            if emoji := self._get_value("favicon-emoji"):
+            if emoji := self._get_value("favicon-emoji", attributes):
                 return f"data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>{emoji}</text></svg>"
             return ""
 
@@ -64,49 +68,60 @@ class EditionHtmlRenderer(HTMLParser):
             if not self._toc_writer:
                 raise Exception("no toc writer")
             writer = StringIO()
-            self._toc_writer(writer)
+            hi = int(attributes.get("hi", 1))
+            lo = int(attributes.get("lo", 6))
+            self._toc_writer(writer, hi, lo)
             return writer.getvalue().rstrip()
 
         value = str(self._metadata.get(key, ""))
         if not value:
-            print(f'warning: no value for "{key}"')
+            self._logger.warning('No "%s" metadata.', key)
         return value
 
     def handle_startendtag(self, tag: str, attrs: List[TAttribute]) -> None:
         edition_attrs = self._get_attrs(attrs)
 
+        attributes = self.make_attributes(attrs) if attrs else ""
+        inner = f"{tag} {attributes}".strip()
+
         if tag == "edition":
-            if "value" in edition_attrs:
-                value = self._get_value(edition_attrs["value"])
-                element = edition_attrs.get("element", None)
-                if element:
-                    self._writer.write("<")
-                    self._writer.write(element)
-                    self._writer.write(">")
-                    self._writer.write(value)
-                    self._writer.write("</")
-                    self._writer.write(element)
-                    self._writer.write(">")
-                else:
-                    self._writer.write(value)
-                return
+            if "pre" in self._path:
+                self._writer.write(f"&lt;{inner} /&gt;")
+            else:
+                if "value" in edition_attrs:
+                    value = self._get_value(edition_attrs["value"], edition_attrs)
+                    element = edition_attrs.get("element", None)
+                    if element:
+                        self._writer.write("<")
+                        self._writer.write(element)
+                        self._writer.write(">")
+                        self._writer.write(value)
+                        self._writer.write("</")
+                        self._writer.write(element)
+                        self._writer.write(">")
+                    else:
+                        self._writer.write(value)
+                    return
 
         if if_key := edition_attrs.get("edition-if", None):
-            if_value = self._get_value(if_key)
+            if_value = self._get_value(if_key, edition_attrs)
             if not if_value:
                 # Don't write anything:
                 return
 
-        attributes = self.make_attributes(attrs) if attrs else ""
-        inner = f"{tag} {attributes}".strip()
         self._writer.write(f"<{inner} />")
 
     def handle_starttag(self, tag: str, attrs: Optional[List[TAttribute]]) -> None:
+        self._path.append(tag)
         attributes = self.make_attributes(attrs) if attrs else ""
         inner = f"{tag} {attributes}".strip()
         self._writer.write(f"<{inner}>")
 
-    def make_attribute(self, attribute: TAttribute) -> str:
+    def make_attribute(
+        self,
+        attribute: TAttribute,
+        value_attributes: Dict[str, str],
+    ) -> str:
         if attribute[0].startswith("edition-"):
             key_suffix = attribute[0][8:]
             if key_suffix == "if":
@@ -114,12 +129,13 @@ class EditionHtmlRenderer(HTMLParser):
             metadata_key = str(attribute[1])
             attribute = (
                 key_suffix,
-                str(self._get_value(metadata_key)),
+                str(self._get_value(metadata_key, value_attributes)),
             )
         return f'{attribute[0]}="{attribute[1]}"'
 
     def make_attributes(self, attributes: List[TAttribute]) -> str:
-        return " ".join([self.make_attribute(a) for a in attributes])
+        value_attributes = self._get_attrs(attributes)
+        return " ".join([self.make_attribute(a, value_attributes) for a in attributes])
 
     def _set_default_metadata(self) -> None:
         if not self._metadata:

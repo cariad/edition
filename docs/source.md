@@ -12,7 +12,7 @@ title: Edition
 
 In fact, the document you're reading right now was pressed by Edition.
 
-<edition value="toc" />
+<edition value="toc" hi="2" />
 
 ## Highlights
 
@@ -129,8 +129,24 @@ Currently only `bash` and `python` code blocks are supported. More languages can
 
 ##### Table of Contents
 
+To insert a table of contents:
+
 ```html
 <edition value="toc" />
+```
+
+You can optionally specify "hi" and "lo" values to restrict the table to a range of headings.
+
+For example, to exclude the title and start at second-level headings:
+
+```html
+<edition value="toc" hi="2" />
+```
+
+To exclude any headings below level three:
+
+```html
+<edition value="toc" lo="2" />
 ```
 
 ## Project
