@@ -74,8 +74,6 @@ edition docs/example-source.md docs/example.html --press html
 <!--edition-exec as=markdown fence=backticks host=shell range=start-->
 
 ```text
-warning: no value for "author"
-warning: no value for "favicon-emoji"
 Pressed: docs/example.html
 ```
 
