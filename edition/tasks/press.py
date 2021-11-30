@@ -21,6 +21,8 @@ class PressTask(Task[PressArguments]):
     def invoke(self) -> int:
         getLogger("edition").setLevel(self.args.log_level)
         getLogger("comprehemd").setLevel(self.args.log_level)
+        getLogger("dinject").setLevel(self.args.log_level)
+        getLogger("doutline").setLevel(self.args.log_level)
 
         with open(self.args.source, "r") as f:
             press = make(key=self.args.key, markdown_content=f.read())

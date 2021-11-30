@@ -1,5 +1,6 @@
 from html.parser import HTMLParser
 from io import StringIO
+from logging import getLogger
 from sys import stdout
 from typing import IO, Callable, Dict, List, Optional, Tuple
 
@@ -18,6 +19,7 @@ class EditionHtmlRenderer(HTMLParser):
         toc_writer: Optional[Callable[[IO[str], int, int], None]] = None,
     ) -> None:
         super().__init__()
+        self._logger = getLogger("edition")
         self._metadata = metadata
         self._toc_writer = toc_writer
         self._writer: IO[str] = stdout
@@ -73,7 +75,7 @@ class EditionHtmlRenderer(HTMLParser):
 
         value = str(self._metadata.get(key, ""))
         if not value:
-            print(f'warning: no value for "{key}"')
+            self._logger.warning('No "%s" metadata.', key)
         return value
 
     def handle_startendtag(self, tag: str, attrs: List[TAttribute]) -> None:
