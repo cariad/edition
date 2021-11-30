@@ -41,6 +41,7 @@ h3,
 h4,
 h5,
 h6,
+img,
 ol,
 p,
 ul {
@@ -137,6 +138,18 @@ blockquote {
   padding-left: 1rem;
 }
 
+img,
+a > code,
+h2 > code,
+h3 > code,
+h4 > code,
+h5 > code,
+h6 > code,
+li > code,
+p > code {
+  border-radius: 0.3em;
+}
+
 a > code,
 h2 > code,
 h3 > code,
@@ -146,7 +159,6 @@ h6 > code,
 li > code,
 p > code {
   background: var(--accent);
-  border-radius: 0.3em;
 
   letter-spacing: 0.04em;
 
