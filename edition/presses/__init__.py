@@ -2,7 +2,8 @@ from io import StringIO
 from typing import Dict, List, Tuple, Type, cast
 
 import frontmatter  # pyright: reportMissingTypeStubs=false
-from comprehemd import read_outline
+from comprehemd import HeadingBlock, MarkdownParser
+from doutline import OutlineNode
 
 from edition.exceptions import NoPressError
 from edition.metadata import Metadata
@@ -27,7 +28,16 @@ def make(key: str, markdown_content: str) -> "Press":
         frontmatter.parse(markdown_content),
     )  # pyright: reportUnknownMemberType=false
 
-    metadata["toc"] = read_outline(StringIO(markdown_content))
+    outline_root = OutlineNode[str]()
+    metadata["outline"] = outline_root
+
+    # Extract metadata:
+    for block in MarkdownParser().read(StringIO(markdown_body)):
+        if isinstance(block, HeadingBlock):
+            if block.level == 1:
+                metadata["title"] = metadata.get("title", block.text)
+            outline_root.append(block.level, block.text)
+
     return press(markdown_body=markdown_body, metadata=metadata)
 
 
