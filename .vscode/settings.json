@@ -9,6 +9,7 @@
     "lexers",
     "mypy",
     "pygments",
+    "traceback",
     "xlarge"
   ]
 }

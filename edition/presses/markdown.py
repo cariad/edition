@@ -41,7 +41,7 @@ class MarkdownPress(Press):
             )
 
             renderer.render(
-                reader=block.source,
+                reader=StringIO(block.source),
                 writer=writer,
             )
             writer.write("\n")

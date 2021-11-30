@@ -140,6 +140,22 @@ print("Hello, world!")
 <!--edition-exec-->
 ~~~
 
+If your code fails then an error message will be injected:
+
+```python
+print(foo)
+```
+
+<!--edition-exec as=markdown fence=backticks host=shell range=start-->
+
+```text
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+NameError: name 'foo' is not defined
+```
+
+<!--edition-exec range=end-->
+
 Currently only `bash` and `python` code blocks are supported. More languages can be added if they are [requested](#contributing).
 
 ##### Table of Contents
