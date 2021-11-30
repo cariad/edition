@@ -22,6 +22,7 @@ class EditionHtmlRenderer(HTMLParser):
         self._toc_writer = toc_writer
         self._writer: IO[str] = stdout
         self._last_data: str = ""
+        self._path: List[str] = []
 
     def handle_comment(self, data: str) -> None:
         """
@@ -43,6 +44,9 @@ class EditionHtmlRenderer(HTMLParser):
         self._writer.write(f"<!{decl}>")
 
     def handle_endtag(self, tag: str) -> None:
+        popped = self._path.pop()
+        if popped != tag:
+            raise Exception(f"expected {popped} but ended {tag}")
         self._writer.write(f"</{tag}>")
 
     def _get_attrs(self, attrs: List[TAttribute]) -> Dict[str, str]:
@@ -77,21 +81,27 @@ class EditionHtmlRenderer(HTMLParser):
     def handle_startendtag(self, tag: str, attrs: List[TAttribute]) -> None:
         edition_attrs = self._get_attrs(attrs)
 
+        attributes = self.make_attributes(attrs) if attrs else ""
+        inner = f"{tag} {attributes}".strip()
+
         if tag == "edition":
-            if "value" in edition_attrs:
-                value = self._get_value(edition_attrs["value"], edition_attrs)
-                element = edition_attrs.get("element", None)
-                if element:
-                    self._writer.write("<")
-                    self._writer.write(element)
-                    self._writer.write(">")
-                    self._writer.write(value)
-                    self._writer.write("</")
-                    self._writer.write(element)
-                    self._writer.write(">")
-                else:
-                    self._writer.write(value)
-                return
+            if "pre" in self._path:
+                self._writer.write(f"&lt;{inner} /&gt;")
+            else:
+                if "value" in edition_attrs:
+                    value = self._get_value(edition_attrs["value"], edition_attrs)
+                    element = edition_attrs.get("element", None)
+                    if element:
+                        self._writer.write("<")
+                        self._writer.write(element)
+                        self._writer.write(">")
+                        self._writer.write(value)
+                        self._writer.write("</")
+                        self._writer.write(element)
+                        self._writer.write(">")
+                    else:
+                        self._writer.write(value)
+                    return
 
         if if_key := edition_attrs.get("edition-if", None):
             if_value = self._get_value(if_key, edition_attrs)
@@ -99,11 +109,10 @@ class EditionHtmlRenderer(HTMLParser):
                 # Don't write anything:
                 return
 
-        attributes = self.make_attributes(attrs) if attrs else ""
-        inner = f"{tag} {attributes}".strip()
         self._writer.write(f"<{inner} />")
 
     def handle_starttag(self, tag: str, attrs: Optional[List[TAttribute]]) -> None:
+        self._path.append(tag)
         attributes = self.make_attributes(attrs) if attrs else ""
         inner = f"{tag} {attributes}".strip()
         self._writer.write(f"<{inner}>")
