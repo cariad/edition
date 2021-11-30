@@ -347,7 +347,7 @@ h2, h3, h4, h5, h6 {
 <p><strong>WARNING: This is a pre-release project.</strong></p>
 <p><strong>Edition</strong> is a command-line application for creating beautiful HTML and Markdown editions of your projects' documentation.</p>
 <p>In fact, the document you're reading right now was pressed by Edition.</p>
-<p><nav class="toc"><ul><li><a href="#-edition">📰 Edition</a><ul><li><a href="#highlights">Highlights</a></li><li><a href="#getting-started">Getting started</a><ul><li><a href="#installation">Installation</a></li><li><a href="#quick-start-example">Quick-start example</a></li></ul></li><li><a href="#usage">Usage</a><ul><li><a href="#command-line">Command line</a></li><li><a href="#creating-your-source-document">Creating your source document</a><ul><li><a href="#front-matter">Front matter</a></li><li><a href="#markup">Markup</a><ul><li><a href="#code-execution">Code execution</a></li><li><a href="#table-of-contents">Table of Contents</a></li></ul></li></ul></li></ul></li><li><a href="#project">Project</a><ul><li><a href="#contributing">Contributing</a></li><li><a href="#licence">Licence</a></li><li><a href="#author">Author</a></li><li><a href="#acknowledgements">Acknowledgements</a></li></ul></li></ul></li></ul></nav></p>
+<p><nav class="toc"><ol><li><a href="#highlights">Highlights</a></li><li><a href="#getting-started">Getting started</a><ol><li><a href="#installation">Installation</a></li><li><a href="#quick-start-example">Quick-start example</a></li></ol></li><li><a href="#usage">Usage</a><ol><li><a href="#command-line">Command line</a></li><li><a href="#creating-your-source-document">Creating your source document</a><ol><li><a href="#front-matter">Front matter</a></li><li><a href="#markup">Markup</a><ol><li><a href="#code-execution">Code execution</a></li><li><a href="#table-of-contents">Table of Contents</a></li></ol></li></ol></li></ol></li><li><a href="#project">Project</a><ol><li><a href="#contributing">Contributing</a></li><li><a href="#licence">Licence</a></li><li><a href="#author">Author</a></li><li><a href="#acknowledgements">Acknowledgements</a></li></ol></li></ol></nav></p>
 <h2>Highlights<a id="highlights"></a></h2>
 <ul>
 <li><strong>Write your documentation once.</strong><br />Edition presses README.md and HTML documents ready to upload directly to GitHub Pages or any other static hosting, all from the same source.</li>
@@ -461,7 +461,17 @@ favicon-emoji: 🍕
 
 <p>Currently only <code>bash</code> and <code>python</code> code blocks are supported. More languages can be added if they are <a href="#contributing">requested</a>.</p>
 <h5>Table of Contents<a id="table-of-contents"></a></h5>
+<p>To insert a table of contents:</p>
 <div class="highlight"><pre><span></span><span class="p"><</span><span class="nt">edition</span> <span class="na">value</span><span class="o">=</span><span class="s">"toc"</span> <span class="p">/></span>
+</pre></div>
+
+<p>You can optionally specify "hi" and "lo" values to restrict the table to a range of headings.</p>
+<p>For example, to exclude the title and start at second-level headings:</p>
+<div class="highlight"><pre><span></span><span class="p"><</span><span class="nt">edition</span> <span class="na">value</span><span class="o">=</span><span class="s">"toc"</span> <span class="na">hi</span><span class="o">=</span><span class="s">"2"</span> <span class="p">/></span>
+</pre></div>
+
+<p>To exclude any headings below level three:</p>
+<div class="highlight"><pre><span></span><span class="p"><</span><span class="nt">edition</span> <span class="na">value</span><span class="o">=</span><span class="s">"toc"</span> <span class="na">lo</span><span class="o">=</span><span class="s">"2"</span> <span class="p">/></span>
 </pre></div>
 
 <h2>Project<a id="project"></a></h2>
