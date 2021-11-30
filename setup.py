@@ -46,7 +46,7 @@ setup(
         "cline~=1.1",
         "comprehemd==1.0.0a4",
         "dinject==1.3.0a3",
-        "doutline==1.0.0a2",
+        "doutline==1.0.0a3",
         "markdown~=3.3.4",
         "pygments~=2.10",
         "python-frontmatter~=1.0",
