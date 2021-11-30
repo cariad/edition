@@ -4,8 +4,6 @@ from logging import getLogger
 from sys import stdout
 from typing import IO, Callable, Dict, List, Optional, Tuple
 
-from dinject.inject import Reader
-
 from edition.html import get_css
 from edition.metadata import Metadata
 
@@ -112,7 +110,7 @@ class EditionHtmlRenderer(HTMLParser):
         self._writer.write(f"<{inner} />")
 
     def handle_starttag(self, tag: str, attrs: Optional[List[TAttribute]]) -> None:
-        self._path.append(tag)
+        self._path.insert(0, tag)
         attributes = self.make_attributes(attrs) if attrs else ""
         inner = f"{tag} {attributes}".strip()
         self._writer.write(f"<{inner}>")
@@ -146,12 +144,9 @@ class EditionHtmlRenderer(HTMLParser):
             if new_css not in existing_css:
                 self._metadata["css"] = existing_css + "\n" + new_css
 
-    def render(self, reader: Reader, writer: IO[str]) -> None:
+    def render(self, reader: IO[str], writer: IO[str]) -> None:
         self._set_default_metadata()
         self._writer = writer
-
-        if isinstance(reader, str):
-            reader = StringIO(reader)
 
         for line in reader:
             self.feed(line)
